@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta - Gerenciamento de Transporte</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: darkgrey;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .table-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .table th, .table td {
+            vertical-align: middle;
+        }
+        .form-label {
+            font-weight: bold;
+        }
+        .excluir-container {
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2 class="text-center mb-4">Consulta de Dados</h2>
+    <div class="text-center mb-4">
+        <a th:href="@{/dados/inserir}" class="btn btn-success">Inserir Novo Registro</a>
+    </div>
+
+    <div class="table-container">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Linha de Ônibus</th>
+                <th>Horário</th>
+                <th>Local</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="dado : ${dados}">
+                <td th:text="${dado.id}"></td>
+                <td th:text="${dado.linha}"></td>
+                <td th:text="${dado.horario}"></td>
+                <td th:text="${dado.local}"></td>
+                <td>
+                    <a th:href="@{/dados/editar/{id}(id=${dado.id})}" class="btn btn-warning">Editar</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="excluir-container">
+        <h4 class="text-center">Excluir Registro</h4>
+        <form th:action="@{/dados/excluir}" method="post" class="mb-3">
+            <div class="mb-3">
+                <label for="idDado" class="form-label">ID do Registro</label>
+                <input type="number" id="idDado" name="id" class="form-control" required />
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-danger">Excluir Registro</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
