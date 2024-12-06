@@ -2,31 +2,23 @@ package com.transporte.service;
 
 import com.transporte.model.Linha;
 import com.transporte.repository.LinhaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LinhaService {
-    private final LinhaRepository repository;
 
-    public LinhaService(LinhaRepository repository) {
-        this.repository = repository;
-    }
+    @Autowired
+    private LinhaRepository linhaRepository;
 
-    public Linha salvar(Linha linha) {
-        return repository.save(linha);
-    }
-
-    public List<Linha> listar() {
-        return repository.findAll();
+    public Optional<Linha> buscarPorId(Long id) {
+        return linhaRepository.findById(id);
     }
 
     public List<Linha> buscarPorNumero(String numero) {
-        return repository.findByNumero(numero);
-    }
-
-    public void deletar(Long id) {
-        repository.deleteById(id);
+        return linhaRepository.findByNome(numero);
     }
 }

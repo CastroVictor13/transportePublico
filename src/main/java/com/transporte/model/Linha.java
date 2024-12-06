@@ -1,20 +1,16 @@
 package com.transporte.model;
 
-import jakarta.persistence.*;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 @Entity
-@Table(name = "linha_transporte")
 public class Linha {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "nome")
-    private String numero;
-
-    @Column(name = "descricao")
-    private String local;
+    private String nome;
+    private String descricao;
 
     public Long getId() {
         return id;
@@ -24,19 +20,19 @@ public class Linha {
         this.id = id;
     }
 
-    public String getNumero() {
-        return numero;
+    public String getNome() {
+        return nome;
     }
 
-    public void setNumero(String numero) {
-        this.numero = numero;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public String getLocal() {
-        return local;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setLocal(String local) {
-        this.local = local;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 }

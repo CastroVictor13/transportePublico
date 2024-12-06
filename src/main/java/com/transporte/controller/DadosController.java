@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -21,14 +20,7 @@ public class DadosController {
 
     @GetMapping("/consultar")
     public String consultar(@RequestParam String pesquisa, Model model) {
-        List<Linha> dados = new ArrayList<>();
-
-        try {
-            Long id = Long.parseLong(pesquisa);
-            dadoRepository.findById(id).ifPresent(dados::add);
-        } catch (NumberFormatException e) {
-            dados = dadoRepository.findByNumero(pesquisa);
-        }
+        List<Linha> dados = dadoRepository.findByNome(pesquisa);
 
         model.addAttribute("dados", dados);
         return "listagem";

@@ -11,31 +11,27 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
-@RequestMapping("/linhas")
+@RequestMapping("/linha")
 public class LinhaController {
 
     @Autowired
-    private LinhaRepository linhaRepository;
+    private LinhaRepository dadoRepository;
 
     @GetMapping("/consultar")
-    public String consultar(@RequestParam(required = false) Long id,
-                            @RequestParam(required = false) String numero,
-                            Model model) {
-        List<Linha> linhas = new ArrayList<>();
+    public String consultar(@RequestParam String pesquisa, Model model) {
+        List<Linha> dados = new ArrayList<>();
 
-        if (id != null) {
-            linhaRepository.findById(id).ifPresent(linhas::add);
-        }
-        else if (numero != null && !numero.isEmpty()) {
-            linhas = linhaRepository.findByNumero(numero);
-        }
-        else {
-            linhas = linhaRepository.findAll();
+        try {
+            List<Linha> linhas = dadoRepository.findByNome(pesquisa);
+            dados.addAll(linhas);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        model.addAttribute("linhas", linhas);
+        model.addAttribute("dados", dados);
         return "listagem";
     }
 }
