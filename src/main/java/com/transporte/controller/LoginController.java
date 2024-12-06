@@ -25,7 +25,7 @@ public class LoginController {
 
     @GetMapping("/consultar")
     public String consultarPage() {
-        return "consultar";
+        return "consulta";
     }
 }
 
