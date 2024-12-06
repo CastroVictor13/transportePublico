@@ -3,6 +3,7 @@ package com.transporte.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "linha_transporte")
 public class Linha {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

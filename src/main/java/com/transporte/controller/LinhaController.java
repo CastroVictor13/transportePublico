@@ -1,44 +1,41 @@
 package com.transporte.controller;
 
 import com.transporte.model.Linha;
-import com.transporte.service.LinhaService;
+import com.transporte.repository.LinhaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @RequestMapping("/linhas")
 public class LinhaController {
-    private final LinhaService service;
 
-    public LinhaController(LinhaService service) {
-        this.service = service;
-    }
+    @Autowired
+    private LinhaRepository linhaRepository;
 
-    @GetMapping
-    public String listarLinhas(Model model) {
-        model.addAttribute("linhas", service.listar());
-        return "consultar";
-    }
+    @GetMapping("/consultar")
+    public String consultar(@RequestParam(required = false) Long id,
+                            @RequestParam(required = false) String numero,
+                            Model model) {
+        List<Linha> linhas = new ArrayList<>();
 
-    @PostMapping
-    public String salvarLinha(@ModelAttribute Linha linha) {
-        service.salvar(linha);
-        return "redirect:/linhas";
-    }
+        if (id != null) {
+            linhaRepository.findById(id).ifPresent(linhas::add);
+        }
+        else if (numero != null && !numero.isEmpty()) {
+            linhas = linhaRepository.findByNumero(numero);
+        }
+        else {
+            linhas = linhaRepository.findAll();
+        }
 
-    @GetMapping("/{numero}")
-    public String buscarPorNumero(@PathVariable String numero, Model model) {
-        List<Linha> linhas = service.buscarPorNumero(numero);
         model.addAttribute("linhas", linhas);
-        return "consultar";
-    }
-
-    @PostMapping("/deletar/{id}")
-    public String deletar(@PathVariable Long id) {
-        service.deletar(id);
-        return "redirect:/linhas";
+        return "listagem";
     }
 }
