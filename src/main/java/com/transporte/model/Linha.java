@@ -5,11 +5,15 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "linha_transporte")
 public class Linha {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "nome")
     private String numero;
-    private String horario;
+
+    @Column(name = "descricao")
     private String local;
 
     public Long getId() {
@@ -26,14 +30,6 @@ public class Linha {
 
     public void setNumero(String numero) {
         this.numero = numero;
-    }
-
-    public String getHorario() {
-        return horario;
-    }
-
-    public void setHorario(String horario) {
-        this.horario = horario;
     }
 
     public String getLocal() {
